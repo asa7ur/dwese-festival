@@ -1,20 +1,21 @@
-CREATE TABLE patrocinadores (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    nombre VARCHAR(100) NOT NULL,
-    telefono VARCHAR(20),
-    email VARCHAR(100),
-    aporte DECIMAL(10,2) NOT NULL,
-    escenario_id INT,
-    FOREIGN KEY (escenario_id) REFERENCES escenario(id)
+CREATE DATABASE IF NOT EXISTS FestivalDB;
+USE FestivalDB;
+
+CREATE TABLE IF NOT EXISTS Artists (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    code VARCHAR(20) UNIQUE,
+    name VARCHAR(100),
+    country VARCHAR(50)
 );
 
-CREATE TABLE espectadores (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    nombre VARCHAR(50) NOT NULL,
-    apellidos VARCHAR(100) NOT NULL,
-    edad INT CHECK (edad >= 18),
-    telefono VARCHAR(20),
-    email VARCHAR(100),
-    ciudad VARCHAR(50),
-    pais VARCHAR(50)
+CREATE TABLE IF NOT EXISTS Performances (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    code VARCHAR(20) UNIQUE,
+    date DATE,
+    start_time TIME,
+    end_time TIME,
+    artist_id INT,
+    stage_id INT,
+    FOREIGN KEY (artist_id) REFERENCES Artists(id),
+    FOREIGN KEY (stage_id) REFERENCES Stages(id)
 );
