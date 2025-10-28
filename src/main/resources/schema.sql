@@ -27,14 +27,19 @@ CREATE TABLE IF NOT EXISTS Performances (
     FOREIGN KEY (stage_id) REFERENCES Stages(id)
 );
 
-CREATE TABLE IF NOT EXISTS Spectators (
+CREATE TABLE IF NOT EXISTS Sponsors (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    code VARCHAR(20) UNIQUE,
-    name VARCHAR(50),
-    last_name VARCHAR(100),
-    birth_date DATE,
+    code VARCHAR(50) UNIQUE,
+    name VARCHAR(100),
     phone VARCHAR(20),
     email VARCHAR(100),
-    city VARCHAR(100),
-    country VARCHAR(50)
+    contribution DECIMAL(10,2)
+);
+
+CREATE TABLE IF NOT EXISTS SponsorStage (
+    sponsor_id INT,
+    stage_id INT,
+    PRIMARY KEY (sponsor_id, stage_id),
+    FOREIGN KEY (sponsor_id) REFERENCES Sponsors(id),
+    FOREIGN KEY (stage_id) REFERENCES Stages(id)
 );
