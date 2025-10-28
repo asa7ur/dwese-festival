@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head ('DWES Festival - Listado de Performances')"></head>
+<body>
+<div class="content-wrapper">
+    <header th:replace="fragments/header :: header"></header>
+
+    <main class="container mt-5">
+        <h1>Performances</h1>
+
+        <!-- Mensaje de error -->
+        <div th:if="${errorMessage}" class="alert alert-danger">
+            <p th:text="${errorMessage}"></p>
+        </div>
+
+        <!-- Tabla de performances -->
+        <table class="table table-bordered mt-3">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Code</th>
+                <th>Date</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Artist ID</th>
+                <th>Stage ID</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="perf : ${listPerformances}">
+                <td th:text="${perf.id}"></td>
+                <td th:text="${perf.code}"></td>
+                <td th:text="${perf.date}"></td>
+                <td th:text="${perf.startTime}"></td>
+                <td th:text="${perf.endTime}"></td>
+                <td th:text="${perf.artistId}"></td>
+                <td th:text="${perf.stageId}"></td>
+                <td>
+                    <a th:href="@{/performances/edit(id=${perf.id})}" class="btn btn-primary btn-sm">Edit</a>
+                    <form th:action="@{/performances/delete}" method="post" class="d-inline">
+                        <input type="hidden" name="id" th:value="${perf.id}" />
+                        <button type="submit" class="btn btn-danger btn-sm"
+                                th:onclick="|return confirm('Are you sure you want to delete this performance?');|">
+                            Delete
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <a th:href="@{/performances/new}" class="btn btn-success mt-3">Add New Performance</a>
+        <a th:href="@{/}" class="btn btn-secondary mt-3">Back to Home</a>
+    </main>
+
+    <footer class="footer" th:replace="fragments/footer :: footer"></footer>
+</div>
+</body>
+</html>
