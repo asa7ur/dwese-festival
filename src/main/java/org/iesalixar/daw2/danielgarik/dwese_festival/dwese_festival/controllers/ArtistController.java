@@ -16,6 +16,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/artists")
 public class ArtistController {
+
     private static final Logger logger = LoggerFactory.getLogger(ArtistController.class);
 
     @Autowired
