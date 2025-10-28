@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head th:replace="~{fragments/head :: head('Ticket Logger - Listado de Artistas')}">
+    <title>Ticket Logger</title>
+</head>
+<body>
+<header th:replace="~{fragments/header :: header}"></header>
+
+<main class="container mt-5">
+    <h1>Lista de Artistas</h1>
+
+    <div th:if="${errorMessage}" class="alert alert-danger">
+        <p th:text="${errorMessage}"></p>
+    </div>
+
+    <div class="mb-3">
+        <a th:href="@{/artists/new}" class="btn btn-success mt-3">+ Nuevo Artista</a>
+    </div>
+
+    <table class="table table-bordered mt-3">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Código</th>
+            <th>Nombre</th>
+            <th>País</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="artist : ${listArtists}">
+            <td th:text="${artist.id}"></td>
+            <td th:text="${artist.code}"></td>
+            <td th:text="${artist.name}"></td>
+            <td th:text="${artist.country}"></td>
+            <td>
+                <a th:href="@{/artists/edit(id=${artist.id})}" class="btn btn-primary btn-sm">Editar</a>
+                <form th:action="@{/artists/delete}" method="post" class="d-inline">
+                    <input type="hidden" name="id" th:value="${artist.id}"/>
+                    <button type="submit" class="btn btn-danger btn-sm"
+                            th:onclick="|return confirm('¿Seguro que deseas eliminar este artista?');|">Eliminar
+                    </button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a href="#" th:href="@{/}" class="btn btn-secondary mt-3">Volver al inicio</a>
+</main>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+
+</body>
+</html>
