@@ -1,7 +1,7 @@
 -- =====================
 -- ARTISTS (40)
 -- =====================
-INSERT INTO Artists (code, name, country) VALUES
+INSERT IGNORE INTO Artists (code, name, country) VALUES
 -- EDM
 ('A001', 'Martin Garrix', 'Netherlands'),
 ('A002', 'Armin van Buuren', 'Netherlands'),
@@ -53,7 +53,7 @@ INSERT INTO Artists (code, name, country) VALUES
 -- =====================
 -- PERFORMANCES
 -- =====================
-INSERT INTO Performances (code, date, start_time, end_time, artist_id, stage_id) VALUES
+INSERT IGNORE INTO Performances (code, date, start_time, end_time, artist_id, stage_id) VALUES
 -- Day 1 (2025-07-12)
 ('P001', '2025-07-12', '22:00', '23:00', 1, 1),
 ('P002', '2025-07-12', '23:15', '00:15', 2, 1),
@@ -106,14 +106,14 @@ INSERT INTO Performances (code, date, start_time, end_time, artist_id, stage_id)
 -- =====================
 -- STAGES
 -- =====================
-INSERT INTO Stages (code, name, capacity) VALUES
+INSERT IGNORE INTO Stages (code, name, capacity) VALUES
 ('STG01', 'The Oracle', 30000),
 ('STG02', 'The Blackout Arena', 12000),
 ('STG03', 'The Q-Dance Stage', 5000),
 ('STG04', 'The Katharsis Floor', 10000);
 
 
-INSERT INTO Spectators (code, name, last_name, birth_date, phone, email, city, country) VALUES
+INSERT IGNORE INTO Spectators (code, name, last_name, birth_date, phone, email, city, country) VALUES
 ('SP00001', 'Garik', 'Asatryan', '1996-12-30', '+34 621 654 789', 'garik.asatryan@email.com', 'Sevilla', 'Spain'),
 ('SP00002', 'Daniel', 'Gonzalez', '2004-08-22', '+34 676 123 567', 'daniel.gonzalez@email.com', 'Sevilla', 'Spain'),
 ('SP00003', 'James', 'Smith', '1997-12-03', '+44 7911 123456', 'james.smith@email.com', 'London', 'United Kingdom'),
