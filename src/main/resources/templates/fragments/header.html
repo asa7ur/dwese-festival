@@ -11,17 +11,17 @@
                     <li class="nav-item">
                         <a class="nav-link"
                            th:classappend="${activePage == 'home'} ? 'active'"
-                           th:href="@{/}">Inicio</a>
+                           th:href="@{/}">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link"
                            th:classappend="${activePage == 'artists'} ? 'active'"
-                           th:href="@{/artists}">Artistas</a>
+                           th:href="@{/artists}">Artists</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link"
-                           th:classappend="${activePage == 'spectators'} ? 'active'"
-                           th:href="@{/spectators}">Espectadores</a>
+                           th:classappend="${activePage == 'stages'} ? 'active'"
+                           th:href="@{/stages}">Stages</a>
                     </li>
                 </ul>
             </div>

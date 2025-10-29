@@ -32,7 +32,7 @@ public class StageDAOImpl implements StageDAO {
     @Override
     public void insertStage(Stage stage) {
         logger.info("Inserting stage with code: {}, name: {}", stage.getCode(), stage.getName());
-        String sql = "INSERT INTO Stages (code, name) VALUES (?, ?)";
+        String sql = "INSERT INTO Stages (code, name, capacity) VALUES (?, ?, ?)";
         int rows = jdbcTemplate.update(sql, stage.getCode(), stage.getName());
         logger.info("Inserted stage. Rows affected: {}", rows);
     }
@@ -41,8 +41,8 @@ public class StageDAOImpl implements StageDAO {
     @Override
     public void updateStage(Stage stage) {
         logger.info("Updating stage with id: {}", stage.getId());
-        String sql = "UPDATE Stages SET code = ?, name = ? WHERE id = ?";
-        int rows = jdbcTemplate.update(sql, stage.getCode(), stage.getName(), stage.getId());
+        String sql = "UPDATE Stages SET code = ?, name = ?, capacity = ? WHERE id = ?";
+        int rows = jdbcTemplate.update(sql, stage.getCode(), stage.getName(), stage.getCapacity(), stage.getId());
         logger.info("Updated stage. Rows affected: {}", rows);
     }
 

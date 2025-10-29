@@ -1,44 +1,41 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/head :: head ('DWES Festival - Insertar/Actualizar Stage')"></head>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head th:replace="~{fragments/head :: head ('EDM-FEST - Insert/Update Stage')}">
+    <title>EDM-FEST</title>
+</head>
 <body>
-<div class="content-wrapper">
-    <header th:replace="fragments/header :: header"></header>
+<header th:replace="~{fragments/header:: header}"></header>
 
-    <main class="container mt-5">
-        <h1 th:text="${stage.id == null ? 'Add New Stage' : 'Edit Stage'}"></h1>
+<main class="container mt-5">
+    <h1 th:text="${stage.id == null ? 'Add New Stage' : 'Edit Stage'}"></h1>
 
-        <div th:if="${errorMessage}" class="alert alert-danger">
-            <p th:text="${errorMessage}"></p>
+    <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
+
+    <form th:action="@{${stage.id == null ? '/stages/insert' : '/stages/update'}}"
+
+          th:object="${stage}" method="post" class="mt-4">
+
+        <input type="hidden" th:field="*{id}"/>
+
+        <div class="mb-3">
+            <label for="code" class="form-label">Code:</label>
+            <input type="text" th:field="*{code}" id="code" class="form-control" required/>
         </div>
+        <div class="mb-3">
+            <label for="name" class="form-label">Name:</label>
+            <input type="text" th:field="*{name}" id="name" class="form-control" required/>
+        </div>
+        <div class="mb-3">
+            <label for="capacity" class="form-label">Capacity:</label>
+            <input type="number" th:field="*{capacity}" id="capacity" class="form-control" required/>
+        </div>
+        <button type="submit" class="btn btn-primary" th:text="${stage.id == null ? 'Create' : 'Update'}"></button>
+    </form>
 
-        <form th:action="${stage.id == null} ? @{/stages/insert} : @{/stages/update}"
-              th:object="${stage}" method="post" class="mt-4">
+    <a href="#" th:href="@{/stages}" class="btn btn-secondary mt-3">Back to Home</a>
+</main>
 
-            <input type="hidden" th:field="*{id}" />
+<footer th:replace="~{fragments/footer :: footer}"></footer>
 
-            <div class="mb-3">
-                <label for="code" class="form-label">Code:</label>
-                <input type="text" th:field="*{code}" id="code" class="form-control" required />
-            </div>
-
-            <div class="mb-3">
-                <label for="name" class="form-label">Name:</label>
-                <input type="text" th:field="*{name}" id="name" class="form-control" required />
-            </div>
-
-            <div class="mb-3">
-                <label for="capacity" class="form-label">Capacity:</label>
-                <input type="number" th:field="*{capacity}" id="capacity" class="form-control" required />
-            </div>
-
-            <button type="submit" class="btn btn-primary" th:text="${stage.id == null ? 'Create' : 'Update'}"></button>
-        </form>
-
-        <a th:href="@{/stages}" class="btn btn-secondary mt-3">Back to List</a>
-    </main>
-
-    <footer class="footer" th:replace="fragments/footer :: footer"></footer>
-</div>
 </body>
 </html>

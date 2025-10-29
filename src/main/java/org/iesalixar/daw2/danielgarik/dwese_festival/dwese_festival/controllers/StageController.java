@@ -24,14 +24,14 @@ public class StageController {
 
     @GetMapping
     public String listStages(Model model) {
-        logger.info("Solicitando la lista de todos los stages...");
+        logger.info("Solicitando la lista de todos los escenarios...");
         List<Stage> listStages = null;
         try {
             listStages = stageDAO.listAllStages();
-            logger.info("Se han cargado {} stages.", listStages.size());
+            logger.info("Se han cargado {} escenarios.", listStages.size());
         } catch (SQLException e) {
-            logger.error("Error al listar los stages: {}", e.getMessage());
-            model.addAttribute("errorMessage", "Error al listar los stages.");
+            logger.error("Error al listar los escenarios: {}", e.getMessage());
+            model.addAttribute("errorMessage", "Error al listar los escenarios.");
         }
         model.addAttribute("listStages", listStages);
         model.addAttribute("activePage", "stages");

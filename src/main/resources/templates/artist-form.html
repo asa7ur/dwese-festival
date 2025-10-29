@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="es">
-<head th:replace="~{fragments/head :: head ('EDM-FEST - Insertar/Actualizar Artista')}">
+<head th:replace="~{fragments/head :: head ('EDM-FEST - Insert/Update Artist')}">
     <title>EDM-FEST</title>
 </head>
 <body>
 <header th:replace="~{fragments/header:: header}"></header>
 
 <main class="container mt-5">
-    <h1 th:text="${artist.id == null ? 'Añadir Nuevo Artista' : 'Editar Artista'}"></h1>
+    <h1 th:text="${artist.id == null ? 'Add New Artist' : 'Edit Artist'}"></h1>
 
     <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
 
@@ -18,29 +18,29 @@
         <input type="hidden" th:field="*{id}"/>
 
         <div class="mb-3">
-            <label for="code" class="form-label">Código:</label>
+            <label for="code" class="form-label">Code:</label>
             <input type="text" th:field="*{code}" id="code" class="form-control" required/>
         </div>
         <div class="mb-3">
-            <label for="name" class="form-label">Nombre:</label>
+            <label for="name" class="form-label">Name:</label>
             <input type="text" th:field="*{name}" id="name" class="form-control" required/>
         </div>
         <div class="mb-3">
-            <label for="country" class="form-label">País:</label>
+            <label for="country" class="form-label">Country:</label>
             <input type="text" th:field="*{country}" id="country" class="form-control" required/>
         </div>
         <div class="mb-3">
-            <label for="phone" class="form-label">Teléfono:</label>
+            <label for="phone" class="form-label">Phone:</label>
             <input type="text" th:field="*{phone}" id="phone" class="form-control" required/>
         </div>
         <div class="mb-3">
             <label for="email" class="form-label">Email:</label>
-            <input type="text" th:field="*{email}" id="email" class="form-control" required/>
+            <input type="email" th:field="*{email}" id="email" class="form-control" required/>
         </div>
-        <button type="submit" class="btn btn-primary" th:text="${artist.id == null ? 'Crear' : 'Actualizar'}"></button>
+        <button type="submit" class="btn btn-primary" th:text="${artist.id == null ? 'Create' : 'Update'}"></button>
     </form>
 
-    <a href="#" th:href="@{/artists}" class="btn btn-secondary mt-3">Volver a la lista</a>
+    <a href="#" th:href="@{/artists}" class="btn btn-secondary mt-3">Back to Home</a>
 </main>
 
 <footer th:replace="~{fragments/footer :: footer}"></footer>
