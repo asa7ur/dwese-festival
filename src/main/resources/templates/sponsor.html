@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head th:replace="~{fragments/head :: head('EDM-FEST - Sponsor List')}">
+    <title>EDM-FEST</title>
+</head>
+<body>
+<header th:replace="~{fragments/header :: header}"></header>
+
+<main class="container mt-5">
+    <h1>Sponsor List</h1>
+
+    <div th:if="${errorMessage}" class="alert alert-danger">
+        <p th:text="${errorMessage}"></p>
+    </div>
+
+    <div class="mb-3">
+        <a th:href="@{/sponsors/new}" class="btn btn-success mt-3">+ Add New Sponsor</a>
+    </div>
+
+    <table class="table table-bordered mt-3">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Code</th>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Coontribution</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="sponsor : ${listSponsors}">
+            <td th:text="${sponsor.id}"></td>
+            <td th:text="${sponsor.code}"></td>
+            <td th:text="${sponsor.name}"></td>
+            <td th:text="${sponsor.contribution}"></td>
+            <td th:text="${sponsor.phone}"></td>
+            <td th:text="${sponsor.email}"></td>
+            <td>
+                <a th:href="@{/sponsors/edit(id=${sponsor.id})}" class="btn btn-primary btn-sm">Edit</a>
+                <form th:action="@{/sponsors/delete}" method="post" class="d-inline">
+                    <input type="hidden" name="id" th:value="${sponsor.id}"/>
+                    <button type="submit" class="btn btn-danger btn-sm"
+                            th:onclick="|return confirm('¿Are you sure you want to delete this sponsor?');|">Delete
+                    </button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a href="#" th:href="@{/}" class="btn btn-secondary mt-3">Back to Home</a>
+</main>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+
+</body>
+</html>

@@ -23,14 +23,14 @@ public class SponsorController {
 
     @GetMapping
     public String listSponsors(Model model) {
-        logger.info("Solicitando la lista de todas las sponsores...");
+        logger.info("Solicitando la lista de todas los patrocinadores...");
         List<Sponsor> listSponsors = null;
         try {
             listSponsors = sponsorDAO.listAllSponsors();
-            logger.info("Se han cargado {} sponsores.", listSponsors.size());
+            logger.info("Se han cargado {} patrocinadores.", listSponsors.size());
         } catch (SQLException e) {
-            logger.error("Error al listar las sponsores: {}", e.getMessage());
-            model.addAttribute("erroMessage", "Error al listar las sponsores.");
+            logger.error("Error al listar los patrocinadores: {}", e.getMessage());
+            model.addAttribute("erroMessage", "Error al listar los patrocinadores.");
         }
         model.addAttribute("listSponsors", listSponsors);
         model.addAttribute("activePage", "sponsors");
@@ -39,23 +39,23 @@ public class SponsorController {
 
     @GetMapping("/new")
     public String showNewForm(Model model) {
-        logger.info("Mostrando formulario para nueva región.");
+        logger.info("Mostrando formulario para nueva patrocinador.");
         model.addAttribute("sponsor", new Sponsor());
         return "sponsor-form";
     }
 
     @GetMapping("/edit")
     public String showEditForm(@RequestParam("id") Long id, Model model) {
-        logger.info("Mostrando formulario de edición para la región con ID {}", id);
+        logger.info("Mostrando formulario de edición para el patrocinador con ID {}", id);
         Sponsor sponsor = null;
         try {
             sponsor = sponsorDAO.getSponsorById(id);
             if (sponsor == null) {
-                logger.warn("No se encontró la región con ID {}", id);
+                logger.warn("No se encontró el patrocinador con ID {}", id);
             }
         } catch (SQLException e) {
-            logger.error("Error al obtener la región con ID {}: {}", id, e.getMessage());
-            model.addAttribute("errorMessage", "Error al obtener la región.");
+            logger.error("Error al obtener el patrocinador con ID {}: {}", id, e.getMessage());
+            model.addAttribute("errorMessage", "Error al obtener el patrocinador.");
         }
         model.addAttribute("sponsor", sponsor);
         return "sponsor-form";
@@ -63,49 +63,49 @@ public class SponsorController {
 
     @PostMapping("/insert")
     public String insertSponsor(@ModelAttribute("sponsor") Sponsor sponsor, RedirectAttributes redirectAttributes) {
-        logger.info("Insertando nueva región con código {}", sponsor.getCode());
+        logger.info("Insertando nueva patrocinador con código {}", sponsor.getCode());
         try {
             if (sponsorDAO.existsSponsorByCode(sponsor.getCode())) {
-                logger.warn("El código de la región {} ya existe.", sponsor.getCode());
-                redirectAttributes.addFlashAttribute("errorMessage", "El código de la región ya existe.");
+                logger.warn("El código del patrocinador {} ya existe.", sponsor.getCode());
+                redirectAttributes.addFlashAttribute("errorMessage", "El código del patrocinador ya existe.");
                 return "redirect:/sponsors/new";
             }
             sponsorDAO.insertSponsor(sponsor);
-            logger.info("Región {} insertada con éxito.", sponsor.getCode());
+            logger.info("Patrocinador {} insertada con éxito.", sponsor.getCode());
         } catch (SQLException e) {
-            logger.error("Error al insertar la región {}: {}", sponsor.getCode(), e.getMessage());
-            redirectAttributes.addFlashAttribute("errorMessage", "Error al insertar la región.");
+            logger.error("Error al insertar el patrocinador {}: {}", sponsor.getCode(), e.getMessage());
+            redirectAttributes.addFlashAttribute("errorMessage", "Error al insertar el patrocinador.");
         }
         return "redirect:/sponsors";
     }
 
     @PostMapping("/update")
     public String updateSponsor(@ModelAttribute("sponsor") Sponsor sponsor, RedirectAttributes redirectAttributes) {
-        logger.info("Actualizando región con ID {}", sponsor.getId());
+        logger.info("Actualizando patrocinador con ID {}", sponsor.getId());
         try {
             if (sponsorDAO.existsSponsorByCodeAndNotId(sponsor.getCode(), sponsor.getId())) {
-                logger.warn("El código de la región {} ya existe para otra región.", sponsor.getCode());
-                redirectAttributes.addFlashAttribute("errorMessage", "El código de la región ya existe para otra región.");
+                logger.warn("El código de el patrocinador {} ya existe para otra patrocinador.", sponsor.getCode());
+                redirectAttributes.addFlashAttribute("errorMessage", "El código del patrocinador ya existe para otra patrocinador.");
                 return "redirect:/sponsors/edit?id=" + sponsor.getId();
             }
             sponsorDAO.updateSponsor(sponsor);
-            logger.info("Región con ID {} actualizada con éxito.", sponsor.getId());
+            logger.info("Patrocinador con ID {} actualizada con éxito.", sponsor.getId());
         } catch (SQLException e) {
-            logger.error("Error al actualizar la región con ID {}: {}", sponsor.getId(), e.getMessage());
-            redirectAttributes.addFlashAttribute("errorMessage", "Error al actualizar la región.");
+            logger.error("Error al actualizar el patrocinador con ID {}: {}", sponsor.getId(), e.getMessage());
+            redirectAttributes.addFlashAttribute("errorMessage", "Error al actualizar el patrocinador.");
         }
         return "redirect:/sponsors";
     }
 
     @PostMapping("/delete")
     public String deleteSponsor(@RequestParam("id") Long id, RedirectAttributes redirectAttributes) {
-        logger.info("Eliminando región con ID {}", id);
+        logger.info("Eliminando patrocinador con ID {}", id);
         try {
             sponsorDAO.deleteSponsor(id);
-            logger.info("Región con ID {} eliminada con éxito.", id);
+            logger.info("Patrocinador con ID {} eliminada con éxito.", id);
         } catch (SQLException e) {
-            logger.error("Error al eliminar la región con ID {}: {}", id, e.getMessage());
-            redirectAttributes.addFlashAttribute("errorMessage", "Error al eliminar la región.");
+            logger.error("Error al eliminar el patrocinador con ID {}: {}", id, e.getMessage());
+            redirectAttributes.addFlashAttribute("errorMessage", "Error al eliminar el patrocinador.");
         }
         return "redirect:/sponsors";
     }

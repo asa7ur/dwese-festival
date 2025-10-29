@@ -21,7 +21,7 @@ public class SponsorDAOImpl implements SponsorDAO {
     @Override
     public List<Sponsor> listAllSponsors() {
         logger.info("Listing all sponsors from the database.");
-        String sql = "SELECT * FROM sponsors";
+        String sql = "SELECT * FROM Sponsors";
         List<Sponsor> sponsors = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Sponsor.class));
         logger.info("Retrieved {} sponsors from the database.", sponsors.size());
         return sponsors;
@@ -29,24 +29,24 @@ public class SponsorDAOImpl implements SponsorDAO {
 
     @Override
     public void insertSponsor(Sponsor sponsor) {
-        logger.info("Inserting sponsor with code: {} and name: {}", sponsor.getCode(), sponsor.getName());
-        String sql = "INSERT INTO sponsors (code, name) VALUES (?, ?)";
-        int rowsAffected = jdbcTemplate.update(sql, sponsor.getCode(), sponsor.getName());
+        logger.info("Inserting sponsor with code: {}, name: {}, phone: {}, email: {} and contribution: {}", sponsor.getCode(), sponsor.getName(), sponsor.getPhone(), sponsor.getEmail(), sponsor.getContribution());
+        String sql = "INSERT INTO Sponsors (code, name, phone, email, contribution) VALUES (?, ?, ?, ?, ?)";
+        int rowsAffected = jdbcTemplate.update(sql, sponsor.getCode(), sponsor.getName(), sponsor.getPhone(), sponsor.getEmail(), sponsor.getContribution());
         logger.info("Inserted sponsor. Rows affected: {}", rowsAffected);
     }
 
     @Override
     public void updateSponsor(Sponsor sponsor) {
         logger.info("Updating sponsor with id: {}", sponsor.getId());
-        String sql = "UPDATE sponsors SET code = ?, name = ? WHERE id = ?";
-        int rowsAffected = jdbcTemplate.update(sql, sponsor.getCode(), sponsor.getName(), sponsor.getId());
+        String sql = "UPDATE Sponsors SET code = ?, name = ?, phone = ?, email = ?, contribution = ? WHERE id = ?";
+        int rowsAffected = jdbcTemplate.update(sql, sponsor.getCode(), sponsor.getName(), sponsor.getPhone(), sponsor.getEmail(), sponsor.getContribution(), sponsor.getId());
         logger.info("Updated sponsor. Rows affected: {}", rowsAffected);
     }
 
     @Override
     public void deleteSponsor(Long id) {
         logger.info("Deleting sponsor with id: {}", id);
-        String sql = "DELETE FROM sponsors WHERE id = ?";
+        String sql = "DELETE FROM Sponsors WHERE id = ?";
         int rowsAffected = jdbcTemplate.update(sql, id);
         logger.info("Deleted sponsor. Rows affected: {}", rowsAffected);
     }
@@ -54,7 +54,7 @@ public class SponsorDAOImpl implements SponsorDAO {
     @Override
     public Sponsor getSponsorById(Long id) {
         logger.info("Retrieving sponsor by id: {}", id);
-        String sql = "SELECT * FROM sponsors WHERE id = ?";
+        String sql = "SELECT * FROM Sponsors WHERE id = ?";
         try {
             Sponsor sponsor = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Sponsor.class), id);
             logger.info("Sponsor retrieved: {} - {}", sponsor.getCode(), sponsor.getName());
@@ -68,7 +68,7 @@ public class SponsorDAOImpl implements SponsorDAO {
     @Override
     public boolean existsSponsorByCode(String code) {
         logger.info("Checking if sponsor with code: {} exists", code);
-        String sql = "SELECT COUNT(*) FROM sponsors WHERE UPPER(code) = ?";
+        String sql = "SELECT COUNT(*) FROM Sponsors WHERE UPPER(code) = ?";
         Integer count = jdbcTemplate.queryForObject(sql, Integer.class, code.toUpperCase());
         boolean exists = count != null && count > 0;
         logger.info("Sponsor with code: {} exists: {}", code, exists);
@@ -79,7 +79,7 @@ public class SponsorDAOImpl implements SponsorDAO {
     public boolean existsSponsorByCodeAndNotId(String code, Long id) {
         logger.info("Checking if sponsor with code: {} exists excluding id: {}",
                 code, id);
-        String sql = "SELECT COUNT(*) FROM sponsors WHERE UPPER(code) = ? AND id != ?";
+        String sql = "SELECT COUNT(*) FROM Sponsors WHERE UPPER(code) = ? AND id != ?";
         Integer count = jdbcTemplate.queryForObject(sql, Integer.class, code.toUpperCase(), id);
         boolean exists = count != null && count > 0;
         logger.info("Sponsor with code: {} exists excluding id {}: {}", code, id, exists);
