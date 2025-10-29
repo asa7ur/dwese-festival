@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="es">
-<head th:replace="~{fragments/head :: head('Ticket Logger - Listado de Artistas')}">
-    <title>Ticket Logger</title>
+<head th:replace="~{fragments/head :: head('EDM-FEST - Listado de Artistas')}">
+    <title>EDM-FEST</title>
 </head>
 <body>
 <header th:replace="~{fragments/header :: header}"></header>
@@ -24,6 +24,8 @@
             <th>Código</th>
             <th>Nombre</th>
             <th>País</th>
+            <th>Teléfono</th>
+            <th>Email</th>
             <th>Acciones</th>
         </tr>
         </thead>
@@ -33,6 +35,8 @@
             <td th:text="${artist.code}"></td>
             <td th:text="${artist.name}"></td>
             <td th:text="${artist.country}"></td>
+            <td th:text="${artist.phone}"></td>
+            <td th:text="${artist.email}"></td>
             <td>
                 <a th:href="@{/artists/edit(id=${artist.id})}" class="btn btn-primary btn-sm">Editar</a>
                 <form th:action="@{/artists/delete}" method="post" class="d-inline">

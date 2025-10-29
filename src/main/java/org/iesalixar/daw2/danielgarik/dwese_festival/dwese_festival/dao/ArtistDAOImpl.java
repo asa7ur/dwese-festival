@@ -29,17 +29,17 @@ public class ArtistDAOImpl implements ArtistDAO {
 
     @Override
     public void insertArtist(Artist artist) {
-        logger.info("Inserting artist with code: {} and name: {}", artist.getCode(), artist.getName());
-        String sql = "INSERT INTO Artists (code, name) VALUES (?, ?)";
-        int rowsAffected = jdbcTemplate.update(sql, artist.getCode(), artist.getName());
+        logger.info("Inserting artist with code: {}, name: {}, phone: {} and email: {}", artist.getCode(), artist.getName(), artist.getPhone(), artist.getEmail());
+        String sql = "INSERT INTO Artists (code, name, phone, email) VALUES (?, ?, ?, ?)";
+        int rowsAffected = jdbcTemplate.update(sql, artist.getCode(), artist.getName(), artist.getPhone(), artist.getEmail());
         logger.info("Inserted artist. Rows affected: {}", rowsAffected);
     }
 
     @Override
     public void updateArtist(Artist artist) {
         logger.info("Updating artist with id: {}", artist.getId());
-        String sql = "UPDATE Artists SET code = ?, name = ? WHERE id = ?";
-        int rowsAffected = jdbcTemplate.update(sql, artist.getCode(), artist.getName(), artist.getId());
+        String sql = "UPDATE Artists SET code = ?, name = ?, phone = ?, email = ? WHERE id = ?";
+        int rowsAffected = jdbcTemplate.update(sql, artist.getCode(), artist.getName(), artist.getPhone(), artist.getEmail(), artist.getId());
         logger.info("Updated artist. Rows affected: {}", rowsAffected);
     }
 

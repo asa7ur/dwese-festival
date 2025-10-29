@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head th:replace="~{fragments/head :: head ('EDM-FEST - Insertar/Actualizar Artista')}">
+    <title>EDM-FEST</title>
+</head>
+<body>
+<header th:replace="~{fragments/header:: header}"></header>
+
+<main class="container mt-5">
+    <h1 th:text="${artist.id == null ? 'Añadir Nuevo Artista' : 'Editar Artista'}"></h1>
+
+    <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
+
+    <form th:action="@{${artist.id == null ? '/artists/insert' : '/artists/update'}}"
+
+          th:object="${artist}" method="post" class="mt-4">
+
+        <input type="hidden" th:field="*{id}"/>
+
+        <div class="mb-3">
+            <label for="code" class="form-label">Código:</label>
+            <input type="text" th:field="*{code}" id="code" class="form-control" required/>
+        </div>
+        <div class="mb-3">
+            <label for="name" class="form-label">Nombre:</label>
+            <input type="text" th:field="*{name}" id="name" class="form-control" required/>
+        </div>
+        <div class="mb-3">
+            <label for="country" class="form-label">País:</label>
+            <input type="text" th:field="*{country}" id="country" class="form-control" required/>
+        </div>
+        <div class="mb-3">
+            <label for="phone" class="form-label">Teléfono:</label>
+            <input type="text" th:field="*{phone}" id="phone" class="form-control" required/>
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email:</label>
+            <input type="text" th:field="*{email}" id="email" class="form-control" required/>
+        </div>
+        <button type="submit" class="btn btn-primary" th:text="${artist.id == null ? 'Crear' : 'Actualizar'}"></button>
+    </form>
+
+    <a href="#" th:href="@{/artists}" class="btn btn-secondary mt-3">Volver a la lista</a>
+</main>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+
+</body>
+</html>
