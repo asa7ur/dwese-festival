@@ -48,13 +48,13 @@ public class StageDAOImpl implements StageDAO {
 
 
     @Override
-    public void deleteStage(int id) throws SQLException {
+    public void deleteStage(Long id) throws SQLException {
         String sql = "DELETE FROM Stages WHERE id = ?";
         jdbcTemplate.update(sql, id);
     }
 
     @Override
-    public Stage getStageById(int id) throws SQLException {
+    public Stage getStageById(Long id) throws SQLException {
         String sql = "SELECT * FROM Stages WHERE id = ?";
         return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Stage.class), id);
     }

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="es">
-<head th:replace="~{fragments/head :: head ('EDM-FEST - Insert/Update Sponsor')}">
+<head th:replace="~{fragments/head :: head('EDM-FEST - Insert/Update Sponsor')}">
     <title>EDM-FEST</title>
 </head>
 <body>
-<header th:replace="~{fragments/header:: header}"></header>
+<header th:replace="~{fragments/header :: header}"></header>
 
 <main class="container mt-5">
     <h1 th:text="${sponsor.id == null ? 'Add New Sponsor' : 'Edit Sponsor'}"></h1>
@@ -12,38 +12,63 @@
     <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
 
     <form th:action="@{${sponsor.id == null ? '/sponsors/insert' : '/sponsors/update'}}"
-
           th:object="${sponsor}" method="post" class="mt-4">
 
         <input type="hidden" th:field="*{id}"/>
 
+        <!-- Datos del Sponsor -->
         <div class="mb-3">
             <label for="code" class="form-label">Code:</label>
             <input type="text" th:field="*{code}" id="code" class="form-control" required/>
         </div>
+
         <div class="mb-3">
             <label for="name" class="form-label">Name:</label>
             <input type="text" th:field="*{name}" id="name" class="form-control" required/>
         </div>
+
         <div class="mb-3">
             <label for="phone" class="form-label">Phone:</label>
             <input type="text" th:field="*{phone}" id="phone" class="form-control" required/>
         </div>
+
         <div class="mb-3">
             <label for="email" class="form-label">Email:</label>
             <input type="email" th:field="*{email}" id="email" class="form-control" required/>
         </div>
+
         <div class="mb-3">
             <label for="contribution" class="form-label">Contribution:</label>
-            <input type="number" th:field="*{contribution}" id="contribution" class="form-control" required/>
+            <input type="number" th:field="*{contribution}" id="contribution" class="form-control" step="0.01" required/>
         </div>
-        <button type="submit" class="btn btn-primary" th:text="${sponsor.id == null ? 'Create' : 'Update'}"></button>
+
+        <!-- Sección de Stages -->
+        <div th:if="${allStages != null}" class="mb-4">
+            <label class="form-label">Stages sponsored by this sponsor:</label>
+            <div class="border p-3 rounded" style="max-height: 250px; overflow-y: auto;">
+                <div th:each="stage : ${allStages}" class="form-check">
+                    <input class="form-check-input"
+                           type="checkbox"
+                           name="stageIds"
+                           th:value="${stage.id}"
+                           th:checked="${#lists.contains(assignedStages, stage)}"
+                           id="stage-checkbox-[[${stage.id}]]">
+                    <label class="form-check-label" th:for="'stage-checkbox-' + ${stage.id}">
+                        <span th:text="${stage.name}"></span>
+                        (<span th:text="${stage.code}"></span>)
+                    </label>
+                </div>
+            </div>
+            <small class="text-muted">Select one or more stages this sponsor contributes to.</small>
+        </div>
+
+        <button type="submit" class="btn btn-primary"
+                th:text="${sponsor.id == null ? 'Create' : 'Update'}"></button>
     </form>
 
-    <a href="#" th:href="@{/sponsors}" class="btn btn-secondary mt-3">Back to Home</a>
+    <a th:href="@{/sponsors}" class="btn btn-secondary mt-3">Back to List</a>
 </main>
 
 <footer th:replace="~{fragments/footer :: footer}"></footer>
-
 </body>
 </html>

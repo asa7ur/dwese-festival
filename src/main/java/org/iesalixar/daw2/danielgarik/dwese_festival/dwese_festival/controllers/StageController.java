@@ -1,6 +1,9 @@
 package org.iesalixar.daw2.danielgarik.dwese_festival.dwese_festival.controllers;
 
+import org.iesalixar.daw2.danielgarik.dwese_festival.dwese_festival.dao.SponsorDAO;
 import org.iesalixar.daw2.danielgarik.dwese_festival.dwese_festival.dao.StageDAO;
+import org.iesalixar.daw2.danielgarik.dwese_festival.dwese_festival.dao.StageSponsorDAO;
+import org.iesalixar.daw2.danielgarik.dwese_festival.dwese_festival.entities.Sponsor;
 import org.iesalixar.daw2.danielgarik.dwese_festival.dwese_festival.entities.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +25,12 @@ public class StageController {
     @Autowired
     private StageDAO stageDAO;
 
+    @Autowired
+    private SponsorDAO sponsorDAO;
+
+    @Autowired
+    private StageSponsorDAO stageSponsorDAO;
+
     @GetMapping
     public String listStages(Model model) {
         logger.info("Solicitando la lista de todos los escenarios...");
@@ -40,73 +49,85 @@ public class StageController {
 
     @GetMapping("/new")
     public String showNewForm(Model model) {
-        logger.info("Mostrando formulario para nuevo stage.");
+        logger.info("Mostrando formulario para nuevo escenario.");
         model.addAttribute("stage", new Stage());
         return "stage-form";
     }
 
     @GetMapping("/edit")
-    public String showEditForm(@RequestParam("id") int id, Model model) {
-        logger.info("Mostrando formulario de edición para el stage con ID {}", id);
+    public String showEditForm(@RequestParam("id") Long id, Model model) {
+        logger.info("Mostrando formulario de edición para el escenario con ID {}", id);
         Stage stage = null;
+        List<Sponsor> allSponsors = null;
+        List<Sponsor> assignedSponsors = null;
         try {
             stage = stageDAO.getStageById(id);
+            allSponsors = sponsorDAO.listAllSponsors();
+            assignedSponsors = stageSponsorDAO.getSponsorByStageId(id);
             if (stage == null) {
-                logger.warn("No se encontró el stage con ID {}", id);
+                logger.warn("No se encontró el escenario con ID {}", id);
             }
         } catch (SQLException e) {
-            logger.error("Error al obtener el stage con ID {}: {}", id, e.getMessage());
-            model.addAttribute("errorMessage", "Error al obtener el stage.");
+            logger.error("Error al obtener el escenario con ID {}: {}", id, e.getMessage());
+            model.addAttribute("errorMessage", "Error al obtener el escenario.");
         }
         model.addAttribute("stage", stage);
+        model.addAttribute("allSponsors", allSponsors);
+        model.addAttribute("assignedSponsors", assignedSponsors);
         return "stage-form";
     }
 
     @PostMapping("/insert")
     public String insertStage(@ModelAttribute("stage") Stage stage, RedirectAttributes redirectAttributes) {
-        logger.info("Insertando nuevo stage con código {}", stage.getCode());
+        logger.info("Insertando nuevo escenario con código {}", stage.getCode());
         try {
             if (stageDAO.existsStageByCode(stage.getCode())) {
-                logger.warn("El código del stage {} ya existe.", stage.getCode());
-                redirectAttributes.addFlashAttribute("errorMessage", "El código del stage ya existe.");
+                logger.warn("El código del escenario {} ya existe.", stage.getCode());
+                redirectAttributes.addFlashAttribute("errorMessage", "El código del escenario ya existe.");
                 return "redirect:/stages/new";
             }
             stageDAO.insertStage(stage);
-            logger.info("Stage {} insertado con éxito.", stage.getCode());
+            logger.info("Escenario {} insertado con éxito.", stage.getCode());
         } catch (SQLException e) {
-            logger.error("Error al insertar el stage {}: {}", stage.getCode(), e.getMessage());
-            redirectAttributes.addFlashAttribute("errorMessage", "Error al insertar el stage.");
+            logger.error("Error al insertar el escenario {}: {}", stage.getCode(), e.getMessage());
+            redirectAttributes.addFlashAttribute("errorMessage", "Error al insertar el escenario.");
         }
         return "redirect:/stages";
     }
 
     @PostMapping("/update")
-    public String updateStage(@ModelAttribute("stage") Stage stage, RedirectAttributes redirectAttributes) {
-        logger.info("Actualizando stage con ID {}", stage.getId());
+    public String updateStage(@ModelAttribute("stage") Stage stage,
+                              @RequestParam(value = "sponsorIds", required = false) List<Long> sponsorIds,
+                              RedirectAttributes redirectAttributes) {
+        logger.info("Actualizando escenario con ID {}", stage.getId());
         try {
             if (stageDAO.existsStageByCodeAndNotId(stage.getCode(), stage.getId())) {
-                logger.warn("El código del stage {} ya existe para otro stage.", stage.getCode());
-                redirectAttributes.addFlashAttribute("errorMessage", "El código del stage ya existe para otro stage.");
+                logger.warn("El código del escenario {} ya existe para otro escenario.", stage.getCode());
+                redirectAttributes.addFlashAttribute("errorMessage", "El código del escenario ya existe para otro escenario.");
                 return "redirect:/stages/edit?id=" + stage.getId();
             }
             stageDAO.updateStage(stage);
-            logger.info("Stage con ID {} actualizado con éxito.", stage.getId());
+
+            stageSponsorDAO.updateSponsorsForStage(stage.getId(), sponsorIds);
+
+            logger.info("Escenario con ID {} actualizado con éxito.", stage.getId());
         } catch (SQLException e) {
-            logger.error("Error al actualizar el stage con ID {}: {}", stage.getId(), e.getMessage());
-            redirectAttributes.addFlashAttribute("errorMessage", "Error al actualizar el stage.");
+            logger.error("Error al actualizar el escenario con ID {}: {}", stage.getId(), e.getMessage());
+            redirectAttributes.addFlashAttribute("errorMessage", "Error al actualizar el escenario.");
         }
         return "redirect:/stages";
     }
 
     @PostMapping("/delete")
-    public String deleteStage(@RequestParam("id") int id, RedirectAttributes redirectAttributes) {
-        logger.info("Eliminando stage con ID {}", id);
+    public String deleteStage(@RequestParam("id") Long id, RedirectAttributes redirectAttributes) {
+        logger.info("Eliminando escenario con ID {}", id);
         try {
+            stageSponsorDAO.deleteByStageId(id);
             stageDAO.deleteStage(id);
-            logger.info("Stage con ID {} eliminado con éxito.", id);
+            logger.info("Escenario con ID {} eliminado con éxito.", id);
         } catch (SQLException e) {
-            logger.error("Error al eliminar el stage con ID {}: {}", id, e.getMessage());
-            redirectAttributes.addFlashAttribute("errorMessage", "Error al eliminar el stage.");
+            logger.error("Error al eliminar el escenario con ID {}: {}", id, e.getMessage());
+            redirectAttributes.addFlashAttribute("errorMessage", "Error al eliminar el escenario.");
         }
         return "redirect:/stages";
     }

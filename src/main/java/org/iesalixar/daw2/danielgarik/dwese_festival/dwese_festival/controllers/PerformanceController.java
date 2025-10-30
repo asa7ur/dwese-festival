@@ -57,7 +57,7 @@ public class PerformanceController {
     }
 
     @GetMapping("/edit")
-    public String showEditForm(@RequestParam("id") int id, Model model) {
+    public String showEditForm(@RequestParam("id") Long id, Model model) {
         logger.info("Mostrando formulario de edición para la performance con ID {}", id);
         Performance performance = null;
         try {
@@ -114,7 +114,7 @@ public class PerformanceController {
     }
 
     @PostMapping("/delete")
-    public String deletePerformance(@RequestParam("id") int id,
+    public String deletePerformance(@RequestParam("id") Long id,
                                     RedirectAttributes redirectAttributes) {
         logger.info("Eliminando performance con ID {}", id);
         try {

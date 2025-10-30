@@ -25,7 +25,7 @@
             <th>Name</th>
             <th>Phone</th>
             <th>Email</th>
-            <th>Coontribution</th>
+            <th>Contribution</th>
             <th>Actions</th>
         </tr>
         </thead>
@@ -34,9 +34,9 @@
             <td th:text="${sponsor.id}"></td>
             <td th:text="${sponsor.code}"></td>
             <td th:text="${sponsor.name}"></td>
-            <td th:text="${sponsor.contribution}"></td>
             <td th:text="${sponsor.phone}"></td>
             <td th:text="${sponsor.email}"></td>
+            <td th:text="${sponsor.contribution}"></td>
             <td>
                 <a th:href="@{/sponsors/edit(id=${sponsor.id})}" class="btn btn-primary btn-sm">Edit</a>
                 <form th:action="@{/sponsors/delete}" method="post" class="d-inline">

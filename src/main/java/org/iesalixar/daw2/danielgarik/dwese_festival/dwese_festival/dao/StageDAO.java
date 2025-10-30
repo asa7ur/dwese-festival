@@ -8,8 +8,8 @@ public interface StageDAO {
     List<Stage> listAllStages() throws SQLException;
     void insertStage(Stage stage) throws SQLException;
     void updateStage(Stage stage) throws SQLException;
-    void deleteStage(int id) throws SQLException; // <- int
-    Stage getStageById(int id) throws SQLException; // <- int
+    void deleteStage(Long id) throws SQLException; // <- int
+    Stage getStageById(Long id) throws SQLException; // <- int
     boolean existsStageByCode(String code) throws SQLException;
     boolean existsStageByCodeAndNotId(String code, Long id) throws SQLException;
 }

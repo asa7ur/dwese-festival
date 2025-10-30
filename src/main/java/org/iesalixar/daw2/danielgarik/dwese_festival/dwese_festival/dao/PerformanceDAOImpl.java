@@ -48,13 +48,13 @@ public class PerformanceDAOImpl implements PerformanceDAO {
     }
 
     @Override
-    public void deletePerformance(int id) throws SQLException {  // <- int
+    public void deletePerformance(Long id) throws SQLException {  // <- int
         String sql = "DELETE FROM Performances WHERE id = ?";
         jdbcTemplate.update(sql, id);
     }
 
     @Override
-    public Performance getPerformanceById(int id) throws SQLException {  // <- int
+    public Performance getPerformanceById(Long id) throws SQLException {  // <- int
         String sql = "SELECT * FROM Performances WHERE id = ?";
         return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Performance.class), id);
     }
