@@ -1,4 +1,4 @@
-package org.iesalixar.daw2.danielgarik.dwese_festival.dwese_festival.entities;
+package org.iesalixar.daw2.danielgarik.dwese_festival.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

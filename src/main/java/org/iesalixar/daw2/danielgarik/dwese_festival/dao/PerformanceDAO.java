@@ -1,6 +1,6 @@
-package org.iesalixar.daw2.danielgarik.dwese_festival.dwese_festival.dao;
+package org.iesalixar.daw2.danielgarik.dwese_festival.dao;
 
-import org.iesalixar.daw2.danielgarik.dwese_festival.dwese_festival.entities.Performance;
+import org.iesalixar.daw2.danielgarik.dwese_festival.entities.Performance;
 import java.sql.SQLException;
 import java.util.List;
 

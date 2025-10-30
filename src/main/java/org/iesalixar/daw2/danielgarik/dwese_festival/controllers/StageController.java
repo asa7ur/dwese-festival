@@ -1,10 +1,10 @@
-package org.iesalixar.daw2.danielgarik.dwese_festival.dwese_festival.controllers;
+package org.iesalixar.daw2.danielgarik.dwese_festival.controllers;
 
-import org.iesalixar.daw2.danielgarik.dwese_festival.dwese_festival.dao.SponsorDAO;
-import org.iesalixar.daw2.danielgarik.dwese_festival.dwese_festival.dao.StageDAO;
-import org.iesalixar.daw2.danielgarik.dwese_festival.dwese_festival.dao.StageSponsorDAO;
-import org.iesalixar.daw2.danielgarik.dwese_festival.dwese_festival.entities.Sponsor;
-import org.iesalixar.daw2.danielgarik.dwese_festival.dwese_festival.entities.Stage;
+import org.iesalixar.daw2.danielgarik.dwese_festival.dao.SponsorDAO;
+import org.iesalixar.daw2.danielgarik.dwese_festival.dao.StageDAO;
+import org.iesalixar.daw2.danielgarik.dwese_festival.dao.StageSponsorDAO;
+import org.iesalixar.daw2.danielgarik.dwese_festival.entities.Sponsor;
+import org.iesalixar.daw2.danielgarik.dwese_festival.entities.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

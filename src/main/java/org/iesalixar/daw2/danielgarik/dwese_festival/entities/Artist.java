@@ -1,26 +1,25 @@
-package org.iesalixar.daw2.danielgarik.dwese_festival.dwese_festival.entities;
+package org.iesalixar.daw2.danielgarik.dwese_festival.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.math.BigDecimal;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Sponsor {
+public class Artist {
     private Long id;
     private String code;
     private String name;
     private String phone;
     private String email;
-    private BigDecimal contribution;
+    private String country;
 
-    public Sponsor(String code, String name, String phone, String email, BigDecimal contribution) {
+    public Artist(String code, String name, String country){
         this.code = code;
         this.name = name;
         this.phone = phone;
         this.email = email;
-        this.contribution = contribution;
+        this.country = country;
     }
 }

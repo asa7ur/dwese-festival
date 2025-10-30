@@ -1,4 +1,4 @@
-package org.iesalixar.daw2.danielgarik.dwese_festival.dwese_festival.controllers;
+package org.iesalixar.daw2.danielgarik.dwese_festival.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

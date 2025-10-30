@@ -1,6 +1,6 @@
-package org.iesalixar.daw2.danielgarik.dwese_festival.dwese_festival.dao;
+package org.iesalixar.daw2.danielgarik.dwese_festival.dao;
 
-import org.iesalixar.daw2.danielgarik.dwese_festival.dwese_festival.entities.Stage;
+import org.iesalixar.daw2.danielgarik.dwese_festival.entities.Stage;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;

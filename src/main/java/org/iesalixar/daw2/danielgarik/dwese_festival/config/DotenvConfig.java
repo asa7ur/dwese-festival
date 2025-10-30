@@ -1,4 +1,4 @@
-package org.iesalixar.daw2.danielgarik.dwese_festival.dwese_festival.config;
+package org.iesalixar.daw2.danielgarik.dwese_festival.config;
 
 import io.github.cdimascio.dotenv.Dotenv;
 import org.slf4j.Logger;
