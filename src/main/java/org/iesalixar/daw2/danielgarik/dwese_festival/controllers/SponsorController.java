@@ -1,6 +1,7 @@
 package org.iesalixar.daw2.danielgarik.dwese_festival.controllers;
 
 import org.iesalixar.daw2.danielgarik.dwese_festival.dao.SponsorDAO;
+import org.iesalixar.daw2.danielgarik.dwese_festival.dao.StageDAO;
 import org.iesalixar.daw2.danielgarik.dwese_festival.dao.StageSponsorDAO;
 import org.iesalixar.daw2.danielgarik.dwese_festival.entities.Sponsor;
 import org.iesalixar.daw2.danielgarik.dwese_festival.entities.Stage;
@@ -22,6 +23,9 @@ public class SponsorController {
 
     @Autowired
     private SponsorDAO sponsorDAO;
+
+    @Autowired
+    private StageDAO stageDAO;
 
     @Autowired
     private StageSponsorDAO stageSponsorDAO;
@@ -52,11 +56,15 @@ public class SponsorController {
     @GetMapping("/edit")
     public String showEditForm(@RequestParam("id") Long id, Model model) {
         logger.info("Mostrando formulario de edición para el patrocinador con ID {}", id);
+
         Sponsor sponsor = null;
-        List<Stage> sponsoredStages = null;
+        List<Stage> allStages = null;
+        List<Stage> assignedStages = null;
+
         try {
             sponsor = sponsorDAO.getSponsorById(id);
-            sponsoredStages = stageSponsorDAO.getStagesBySponsorId(id);
+            allStages = stageDAO.listAllStages();
+            assignedStages = stageSponsorDAO.getStagesBySponsorId(id);
             if (sponsor == null) {
                 logger.warn("No se encontró el patrocinador con ID {}", id);
             }
@@ -65,7 +73,9 @@ public class SponsorController {
             model.addAttribute("errorMessage", "Error al obtener el patrocinador.");
         }
         model.addAttribute("sponsor", sponsor);
-        model.addAttribute("sponsoredStages", sponsoredStages);
+        model.addAttribute("allStages", allStages);
+        model.addAttribute("assignedStages", assignedStages);
+
         return "sponsor-form";
     }
 
