@@ -15,7 +15,7 @@ public class Artist {
     private String email;
     private String country;
 
-    public Artist(String code, String name, String country){
+    public Artist(String code, String name, String phone, String email, String country) {
         this.code = code;
         this.name = name;
         this.phone = phone;
