@@ -3,7 +3,7 @@
 <head th:replace="~{fragments/head :: head('EDM-FEST - Insert/Update Sponsor')}">
     <title>EDM-FEST</title>
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100 bg-dark text-light">
 <header th:replace="~{fragments/header :: header}"></header>
 
 <main class="container mt-5">
@@ -18,35 +18,40 @@
 
         <!-- Datos del Sponsor -->
         <div class="mb-3">
-            <label for="code" class="form-label">Code:</label>
-            <input type="text" th:field="*{code}" id="code" class="form-control" required/>
+            <label for="code" class="form-label text-light">Code:</label>
+            <input type="text" th:field="*{code}" id="code" class="form-control bg-dark text-light border-light"
+                   required/>
         </div>
 
         <div class="mb-3">
-            <label for="name" class="form-label">Name:</label>
-            <input type="text" th:field="*{name}" id="name" class="form-control" required/>
+            <label for="name" class="form-label text-light">Name:</label>
+            <input type="text" th:field="*{name}" id="name" class="form-control bg-dark text-light border-light"
+                   required/>
         </div>
 
         <div class="mb-3">
-            <label for="phone" class="form-label">Phone:</label>
-            <input type="text" th:field="*{phone}" id="phone" class="form-control" required/>
+            <label for="phone" class="form-label text-light">Phone:</label>
+            <input type="text" th:field="*{phone}" id="phone" class="form-control bg-dark text-light border-light"
+                   required/>
         </div>
 
         <div class="mb-3">
-            <label for="email" class="form-label">Email:</label>
-            <input type="email" th:field="*{email}" id="email" class="form-control" required/>
+            <label for="email" class="form-label text-light">Email:</label>
+            <input type="email" th:field="*{email}" id="email" class="form-control bg-dark text-light border-light"
+                   required/>
         </div>
 
         <div class="mb-3">
-            <label for="contribution" class="form-label">Contribution:</label>
-            <input type="number" th:field="*{contribution}" id="contribution" class="form-control" step="0.01" required/>
+            <label for="contribution" class="form-label text-light">Contribution:</label>
+            <input type="number" th:field="*{contribution}" id="contribution"
+                   class="form-control bg-dark text-light border-light" step="0.01" required/>
         </div>
 
         <!-- Sección de Stages -->
         <div th:if="${allStages != null}" class="mb-4">
-            <label class="form-label">Stages sponsored by this sponsor:</label>
+            <label class="form-label text-light">Stages sponsored by this sponsor:</label>
             <div class="border p-3 rounded" style="max-height: 250px; overflow-y: auto;">
-                <div th:each="stage : ${allStages}" class="form-check">
+                <div th:each="stage : ${allStages}" class="form-check bg-dark text-light border-light">
                     <input class="form-check-input"
                            type="checkbox"
                            name="stageIds"

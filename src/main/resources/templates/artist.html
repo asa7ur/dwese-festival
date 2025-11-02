@@ -3,7 +3,7 @@
 <head th:replace="~{fragments/head :: head('EDM-FEST - Artist List')}">
     <title>EDM-FEST</title>
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100 bg-dark text-light">
 <header th:replace="~{fragments/header :: header}"></header>
 
 <main class="container mt-5">
@@ -17,10 +17,9 @@
         <a th:href="@{/artists/new}" class="btn btn-success mt-3">+ Add New Artist</a>
     </div>
 
-    <table class="table table-bordered mt-3">
+    <table class="table table-bordered table-dark table-striped mt-3">
         <thead>
         <tr>
-            <th>ID</th>
             <th>Code</th>
             <th>Name</th>
             <th>Country</th>
@@ -31,7 +30,6 @@
         </thead>
         <tbody>
         <tr th:each="artist : ${listArtists}">
-            <td th:text="${artist.id}"></td>
             <td th:text="${artist.code}"></td>
             <td th:text="${artist.name}"></td>
             <td th:text="${artist.country}"></td>

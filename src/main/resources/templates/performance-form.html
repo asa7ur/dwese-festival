@@ -3,7 +3,7 @@
 <head th:replace="~{fragments/head :: head ('EDM-FEST - Insert/Update Performance')}">
     <title>EDM-FEST</title>
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100 bg-dark text-light">
 <header th:replace="~{fragments/header :: header}"></header>
 
 <main class="container mt-5">
@@ -17,28 +17,32 @@
         <input type="hidden" th:field="*{id}"/>
 
         <div class="mb-3">
-            <label for="code" class="form-label">Code:</label>
-            <input type="text" th:field="*{code}" id="code" class="form-control" required/>
+            <label for="code" class="form-label text-light">Code:</label>
+            <input type="text" th:field="*{code}" id="code" class="form-control bg-dark text-light border-light"
+                   required/>
         </div>
 
         <div class="mb-3">
-            <label for="date" class="form-label">Date:</label>
-            <input type="date" th:field="*{date}" id="date" class="form-control" required/>
+            <label for="date" class="form-label text-light">Date:</label>
+            <input type="date" th:field="*{date}" id="date" class="form-control bg-dark text-light border-light"
+                   required/>
         </div>
 
         <div class="mb-3">
-            <label for="startTime" class="form-label">Start Time:</label>
-            <input type="time" th:field="*{startTime}" id="startTime" class="form-control" required/>
+            <label for="startTime" class="form-label text-light">Start Time:</label>
+            <input type="time" th:field="*{startTime}" id="startTime"
+                   class="form-control bg-dark text-light border-light" required/>
         </div>
 
         <div class="mb-3">
-            <label for="endTime" class="form-label">End Time:</label>
-            <input type="time" th:field="*{endTime}" id="endTime" class="form-control" required/>
+            <label for="endTime" class="form-label text-light">End Time:</label>
+            <input type="time" th:field="*{endTime}" id="endTime" class="form-control bg-dark text-light border-light"
+                   required/>
         </div>
 
         <div class="mb-3">
-            <label for="artistId" class="form-label">Artist:</label>
-            <select th:field="*{artistId}" id="artistId" class="form-select" required>
+            <label for="artistId" class="form-label text-light">Artist:</label>
+            <select th:field="*{artistId}" id="artistId" class="form-select bg-dark text-light border-light" required>
                 <option value="">-- Select Artist --</option>
                 <option th:each="artist : ${artists}"
                         th:value="${artist.id}"
@@ -48,8 +52,8 @@
         </div>
 
         <div class="mb-3">
-            <label for="stageId" class="form-label">Stage:</label>
-            <select th:field="*{stageId}" id="stageId" class="form-select" required>
+            <label for="stageId" class="form-label text-light">Stage:</label>
+            <select th:field="*{stageId}" id="stageId" class="form-select bg-dark text-light border-light" required>
                 <option value="">-- Select Stage --</option>
                 <option th:each="stage : ${stages}"
                         th:value="${stage.id}"
@@ -65,6 +69,6 @@
     <a th:href="@{/performances}" class="btn btn-secondary mt-3">Back to List</a>
 </main>
 
-<footer class="footer" th:replace="~{fragments/footer :: footer}"></footer>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
 </body>
 </html>

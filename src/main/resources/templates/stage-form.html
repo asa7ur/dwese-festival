@@ -3,7 +3,7 @@
 <head th:replace="~{fragments/head :: head('EDM-FEST - Insert/Update Stage')}">
     <title>EDM-FEST</title>
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100 bg-dark text-light">
 <header th:replace="~{fragments/header :: header}"></header>
 
 <main class="container mt-5">
@@ -18,25 +18,28 @@
 
         <!-- Datos básicos del Stage -->
         <div class="mb-3">
-            <label for="code" class="form-label">Code:</label>
-            <input type="text" th:field="*{code}" id="code" class="form-control" required/>
+            <label for="code" class="form-label text-light">Code:</label>
+            <input type="text" th:field="*{code}" id="code" class="form-control bg-dark text-light border-light"
+                   required/>
         </div>
 
         <div class="mb-3">
-            <label for="name" class="form-label">Name:</label>
-            <input type="text" th:field="*{name}" id="name" class="form-control" required/>
+            <label for="name" class="form-label text-light">Name:</label>
+            <input type="text" th:field="*{name}" id="name" class="form-control bg-dark text-light border-light"
+                   required/>
         </div>
 
         <div class="mb-3">
-            <label for="capacity" class="form-label">Capacity:</label>
-            <input type="number" th:field="*{capacity}" id="capacity" class="form-control" min="0" required/>
+            <label for="capacity" class="form-label text-light">Capacity:</label>
+            <input type="number" th:field="*{capacity}" id="capacity"
+                   class="form-control bg-dark text-light border-light" min="0" required/>
         </div>
 
         <!-- Sección de Sponsors -->
         <div th:if="${allSponsors != null}" class="mb-4">
-            <label class="form-label">Sponsors for this stage:</label>
+            <label class="form-label text-light">Sponsors for this stage:</label>
             <div class="border p-3 rounded" style="max-height: 250px; overflow-y: auto;">
-                <div th:each="sponsor : ${allSponsors}" class="form-check">
+                <div th:each="sponsor : ${allSponsors}" class="form-check bg-dark text-light border-light">
                     <input class="form-check-input"
                            type="checkbox"
                            name="sponsorIds"
