@@ -11,4 +11,6 @@ public interface StageSponsorDAO {
     List<Stage> getStagesBySponsorId(Long sponsorId) throws SQLException;
     void deleteByStageId(Long stageId) throws SQLException;
     void updateSponsorsForStage(Long stageId, List<Long> sponsorIds) throws SQLException;
+    void deleteBySponsorId(Long sponsorId) throws SQLException;
+    void updateStagesForSponsor(Long sponsorId, List<Long> stageIds) throws SQLException;
 }

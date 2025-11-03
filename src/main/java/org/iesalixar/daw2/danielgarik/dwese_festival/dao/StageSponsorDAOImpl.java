@@ -62,4 +62,28 @@ public class StageSponsorDAOImpl implements StageSponsorDAO {
         }
         logger.info("Updated {} sponsors for stage ID {}", sponsorIds.size(), stageId);
     }
+
+    @Override
+    public void deleteBySponsorId(Long sponsorId) throws SQLException {
+        logger.info("Deleting all stages for sponsor ID {}", sponsorId);
+        String sql =  "DELETE FROM Stage_Sponsors WHERE sponsor_id = ?";
+        jdbcTemplate.update(sql, sponsorId);
+    }
+
+    @Override
+    public void updateStagesForSponsor(Long sponsorId, List<Long> stageIds) throws SQLException {
+        logger.info("Updating stages for sponsor ID {}", sponsorId);
+        deleteBySponsorId(sponsorId);
+
+        if(stageIds == null || stageIds.isEmpty()){
+            logger.info("No stages provided for sponsor ID {}, all relations cleared", sponsorId);
+            return;
+        }
+
+        String sql = "INSERT INTO Stage_Sponsors (stage_id, sponsor_id) VALUES (?, ?)";
+        for(Long stageId : stageIds){
+            jdbcTemplate.update(sql, stageId, sponsorId);
+        }
+        logger.info("Updated {} sponsors for stage ID {}", stageIds.size(), sponsorId);
+    }
 }

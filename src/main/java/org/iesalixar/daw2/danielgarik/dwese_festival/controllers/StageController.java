@@ -19,7 +19,6 @@ import java.util.List;
 @Controller
 @RequestMapping("/stages")
 public class StageController {
-
     private static final Logger logger = LoggerFactory.getLogger(StageController.class);
 
     @Autowired
@@ -57,9 +56,11 @@ public class StageController {
     @GetMapping("/edit")
     public String showEditForm(@RequestParam("id") Long id, Model model) {
         logger.info("Mostrando formulario de edición para el escenario con ID {}", id);
+
         Stage stage = null;
         List<Sponsor> allSponsors = null;
         List<Sponsor> assignedSponsors = null;
+
         try {
             stage = stageDAO.getStageById(id);
             allSponsors = sponsorDAO.listAllSponsors();
@@ -74,6 +75,7 @@ public class StageController {
         model.addAttribute("stage", stage);
         model.addAttribute("allSponsors", allSponsors);
         model.addAttribute("assignedSponsors", assignedSponsors);
+
         return "stage-form";
     }
 

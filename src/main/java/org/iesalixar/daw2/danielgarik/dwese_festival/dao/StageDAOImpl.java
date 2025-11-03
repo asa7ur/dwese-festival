@@ -33,7 +33,7 @@ public class StageDAOImpl implements StageDAO {
     public void insertStage(Stage stage) {
         logger.info("Inserting stage with code: {}, name: {}", stage.getCode(), stage.getName());
         String sql = "INSERT INTO Stages (code, name, capacity) VALUES (?, ?, ?)";
-        int rows = jdbcTemplate.update(sql, stage.getCode(), stage.getName());
+        int rows = jdbcTemplate.update(sql, stage.getCode(), stage.getName(), stage.getCapacity());
         logger.info("Inserted stage. Rows affected: {}", rows);
     }
 

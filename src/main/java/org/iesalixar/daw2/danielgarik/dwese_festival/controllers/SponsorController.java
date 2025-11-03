@@ -98,7 +98,9 @@ public class SponsorController {
     }
 
     @PostMapping("/update")
-    public String updateSponsor(@ModelAttribute("sponsor") Sponsor sponsor, RedirectAttributes redirectAttributes) {
+    public String updateSponsor(@ModelAttribute("sponsor") Sponsor sponsor,
+                                @RequestParam(value = "stageIds", required = false) List<Long> stageIds,
+                                RedirectAttributes redirectAttributes) {
         logger.info("Actualizando patrocinador con ID {}", sponsor.getId());
         try {
             if (sponsorDAO.existsSponsorByCodeAndNotId(sponsor.getCode(), sponsor.getId())) {
@@ -107,6 +109,9 @@ public class SponsorController {
                 return "redirect:/sponsors/edit?id=" + sponsor.getId();
             }
             sponsorDAO.updateSponsor(sponsor);
+
+            stageSponsorDAO.updateStagesForSponsor(sponsor.getId(), stageIds);
+
             logger.info("Patrocinador con ID {} actualizada con éxito.", sponsor.getId());
         } catch (SQLException e) {
             logger.error("Error al actualizar el patrocinador con ID {}: {}", sponsor.getId(), e.getMessage());
@@ -119,6 +124,7 @@ public class SponsorController {
     public String deleteSponsor(@RequestParam("id") Long id, RedirectAttributes redirectAttributes) {
         logger.info("Eliminando patrocinador con ID {}", id);
         try {
+            stageSponsorDAO.deleteBySponsorId(id);
             sponsorDAO.deleteSponsor(id);
             logger.info("Patrocinador con ID {} eliminada con éxito.", id);
         } catch (SQLException e) {
