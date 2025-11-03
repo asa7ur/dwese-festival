@@ -84,6 +84,6 @@ public class StageSponsorDAOImpl implements StageSponsorDAO {
         for(Long stageId : stageIds){
             jdbcTemplate.update(sql, stageId, sponsorId);
         }
-        logger.info("Updated {} sponsors for stage ID {}", stageIds.size(), sponsorId);
+        logger.info("Updated {} stages for sponsor ID {}", stageIds.size(), sponsorId);
     }
 }
