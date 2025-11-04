@@ -1,6 +1,7 @@
 package org.iesalixar.daw2.danielgarik.dwese_festival.controllers;
 
 import org.iesalixar.daw2.danielgarik.dwese_festival.dao.ArtistDAO;
+import org.iesalixar.daw2.danielgarik.dwese_festival.dao.PerformanceDAO;
 import org.iesalixar.daw2.danielgarik.dwese_festival.entities.Artist;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +22,9 @@ public class ArtistController {
 
     @Autowired
     private ArtistDAO artistDAO;
+
+    @Autowired
+    private PerformanceDAO performanceDAO;
 
     @GetMapping
     public String listArtists(Model model) {
@@ -67,8 +71,8 @@ public class ArtistController {
         logger.info("Insertando nueva artista con código {}", artist.getCode());
         try {
             if (artistDAO.existsArtistByCode(artist.getCode())) {
-                logger.warn("El código de el artista {} ya existe.", artist.getCode());
-                redirectAttributes.addFlashAttribute("errorMessage", "El código de el artista ya existe.");
+                logger.warn("El código del artista {} ya existe.", artist.getCode());
+                redirectAttributes.addFlashAttribute("errorMessage", "El código del artista ya existe.");
                 return "redirect:/artists/new";
             }
             artistDAO.insertArtist(artist);
@@ -85,8 +89,8 @@ public class ArtistController {
         logger.info("Actualizando artista con ID {}", artist.getId());
         try {
             if (artistDAO.existsArtistByCodeAndNotId(artist.getCode(), artist.getId())) {
-                logger.warn("El código de el artista {} ya existe para otro artista.", artist.getCode());
-                redirectAttributes.addFlashAttribute("errorMessage", "El código de el artista ya existe para otro artista.");
+                logger.warn("El código del artista {} ya existe para otro artista.", artist.getCode());
+                redirectAttributes.addFlashAttribute("errorMessage", "El código del artista ya existe para otro artista.");
                 return "redirect:/artists/edit?id=" + artist.getId();
             }
             artistDAO.updateArtist(artist);
@@ -102,6 +106,11 @@ public class ArtistController {
     public String deleteArtist(@RequestParam("id") Long id, RedirectAttributes redirectAttributes) {
         logger.info("Eliminando artista con ID {}", id);
         try {
+            if (performanceDAO.existsPerformanceByArtistId(id)) {
+                logger.warn("El artista con ID {} no puede ser eliminado porque tiene una actuación programada.", id);
+                redirectAttributes.addFlashAttribute("errorMessage", "No se puede eliminar el artista porque tiene una actuación programada.");
+                return "redirect:/artists";
+            }
             artistDAO.deleteArtist(id);
             logger.info("Artista con ID {} eliminada con éxito.", id);
         } catch (SQLException e) {

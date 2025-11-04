@@ -12,4 +12,6 @@ public interface PerformanceDAO {
     Performance getPerformanceById(Long id) throws SQLException;
     boolean existsPerformanceByCode(String code) throws SQLException;
     boolean existsPerformanceByCodeAndNotId(String code, Long id) throws SQLException;
+    boolean existsPerformanceByArtistId(Long artistId) throws SQLException;
+    boolean existsPerformanceByStageId(Long stageId) throws SQLException;
 }

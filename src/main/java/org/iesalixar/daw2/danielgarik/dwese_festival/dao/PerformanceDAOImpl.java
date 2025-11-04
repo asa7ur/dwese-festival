@@ -121,4 +121,24 @@ public class PerformanceDAOImpl implements PerformanceDAO {
         logger.info("Performance with code {} exists excluding id {}: {}", code, id, exists);
         return exists;
     }
+
+    @Override
+    public boolean existsPerformanceByArtistId(Long artistId) throws SQLException {
+        logger.info("Checking if artist with id {} has any performances.", artistId);
+        String sql = "SELECT COUNT(*) FROM Performances WHERE artist_id = ?";
+        Integer count = jdbcTemplate.queryForObject(sql, Integer.class, artistId);
+        boolean exists = count != null && count > 0;
+        logger.info("Artist with id {} has performances: {}", artistId, exists);
+        return exists;
+    }
+
+    @Override
+    public boolean existsPerformanceByStageId(Long stageId) throws SQLException {
+        logger.info("Checking if stage with id {} has any performances.", stageId);
+        String sql = "SELECT COUNT(*) FROM Performances WHERE stage_id = ?";
+        Integer count = jdbcTemplate.queryForObject(sql, Integer.class, stageId);
+        boolean exists = count != null && count > 0;
+        logger.info("Stage with id {} has performances: {}", stageId, exists);
+        return exists;
+    }
 }

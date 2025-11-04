@@ -1,8 +1,7 @@
 package org.iesalixar.daw2.danielgarik.dwese_festival.controllers;
 
-import org.iesalixar.daw2.danielgarik.dwese_festival.dao.SponsorDAO;
-import org.iesalixar.daw2.danielgarik.dwese_festival.dao.StageDAO;
-import org.iesalixar.daw2.danielgarik.dwese_festival.dao.StageSponsorDAO;
+import org.iesalixar.daw2.danielgarik.dwese_festival.dao.*;
+import org.iesalixar.daw2.danielgarik.dwese_festival.entities.Performance;
 import org.iesalixar.daw2.danielgarik.dwese_festival.entities.Sponsor;
 import org.iesalixar.daw2.danielgarik.dwese_festival.entities.Stage;
 import org.slf4j.Logger;
@@ -29,6 +28,9 @@ public class StageController {
 
     @Autowired
     private StageSponsorDAO stageSponsorDAO;
+
+    @Autowired
+    private PerformanceDAO performanceDAO;
 
     @GetMapping
     public String listStages(Model model) {
@@ -124,6 +126,11 @@ public class StageController {
     public String deleteStage(@RequestParam("id") Long id, RedirectAttributes redirectAttributes) {
         logger.info("Eliminando escenario con ID {}", id);
         try {
+            if (performanceDAO.existsPerformanceByStageId(id)) {
+                logger.warn("El escenario con ID {} no puede ser eliminado porque tiene actuaciones programadas.", id);
+                redirectAttributes.addFlashAttribute("errorMessage", "No se puede eliminar el escenario porque tiene actuaciones programadas.");
+                return "redirect:/stages";
+            }
             stageSponsorDAO.deleteByStageId(id);
             stageDAO.deleteStage(id);
             logger.info("Escenario con ID {} eliminado con éxito.", id);
