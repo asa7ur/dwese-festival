@@ -27,17 +27,27 @@ public class ArtistController {
     private PerformanceDAO performanceDAO;
 
     @GetMapping
-    public String listArtists(Model model) {
-        logger.info("Solicitando la lista de todas ls artistas...");
+    public String listArtists(Model model, @RequestParam(defaultValue="1") int page) {
+        logger.info("Listando artistas, página {}", page);
+        int pageSize = 5;
         List<Artist> listArtists = null;
+        int totalArtists;
+        int totalPages = 0;
+
         try {
-            listArtists = artistDAO.listAllArtists();
+            int offset = (page - 1) * pageSize;
+            listArtists = artistDAO.listArtistsPaginated(offset, pageSize);
+            totalArtists = artistDAO.countArtists();
+            totalPages = (int) Math.ceil((double) totalArtists / pageSize);
             logger.info("Se han cargado {} artistas.", listArtists.size());
         } catch (SQLException e) {
             logger.error("Error al listar los artistas: {}", e.getMessage());
             model.addAttribute("erroMessage", "Error al listar los artistas.");
         }
+
         model.addAttribute("listArtists", listArtists);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", totalPages);
         model.addAttribute("activePage", "artists");
         return "artist";
     }

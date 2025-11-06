@@ -20,4 +20,7 @@ public interface ArtistDAO {
 
     boolean existsArtistByCodeAndNotId(String code, Long id) throws SQLException;
 
+    List<Artist> listArtistsPaginated(int offset, int limit) throws SQLException;
+
+    int countArtists() throws SQLException;
 }

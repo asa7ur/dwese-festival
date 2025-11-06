@@ -85,4 +85,18 @@ public class ArtistDAOImpl implements ArtistDAO {
         logger.info("Artist with code: {} exists excluding id {}: {}", code, id, exists);
         return exists;
     }
+
+    @Override
+    public List<Artist> listArtistsPaginated(int offset, int limit) {
+        logger.info("Listing artistss paginated: offset={}, limit={}", offset, limit);
+        String sql = "SELECT * FROM Artists ORDER BY id LIMIT ? OFFSET ?";
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Artist.class), limit, offset);
+    }
+
+    @Override
+    public int countArtists() {
+        logger.info("Counting total artists...");
+        String sql = "SELECT COUNT(*) FROM Artists";
+        return jdbcTemplate.queryForObject(sql, Integer.class);
+    }
 }
